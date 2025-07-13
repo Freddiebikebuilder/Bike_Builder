@@ -3,13 +3,13 @@
     {
       "id": "frame1",
       "name": "Calibre Bossnut Evo",
-      "image": "Images/Frames/calibre_bossnut_evo.png",
+      "image": "Images/Frames/Calibre_Bossnut_Evo.png",
       "basePrice": 1200
     },
     {
       "id": "frame2",
       "name": "Trek Remedy 8",
-      "image": "Images/Frames/trek_remedy_8.png",
+      "image": "Images/Frames/Trek_Remedy.png",
       "basePrice": 1800
     }
   ],
