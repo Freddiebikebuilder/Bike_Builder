@@ -1,24 +1,95 @@
 {
   "frames": [
     {
-      "name": "Forbidden Supernought",
-      "file": "Forbidden-Supernought.png",
-      "price": 3500
+      "id": "frame1",
+      "name": "Calibre Bossnut Evo",
+      "image": "Images/Frames/calibre_bossnut_evo.png",
+      "basePrice": 1200
     },
     {
-      "name": "Trek Remedy",
-      "file": "Trek-Remedy.png",
-      "price": 2800
+      "id": "frame2",
+      "name": "Trek Remedy 8",
+      "image": "Images/Frames/trek_remedy_8.png",
+      "basePrice": 1800
     }
   ],
   "forks": [
     {
+      "id": "fork1",
+      "name": "RockShox Pike Ultimate",
+      "image": "Images/Parts/Forks/rockshox_pike_ultimate.png",
+      "price": 850,
+      "link": "https://www.example.com/rockshox-pike-ultimate"
+    },
+    {
+      "id": "fork2",
       "name": "Fox 36 Factory",
-      "preview": "Fox-36-Preview.png",
-      "overlay": "Fox-36-Overlay.png",
-      "price": 899,
-      "link": "https://example.com/fox-36"
+      "image": "Images/Parts/Forks/fox_36_factory.png",
+      "price": 950,
+      "link": "https://www.example.com/fox-36-factory"
+    }
+  ],
+  "rearShocks": [
+    {
+      "id": "shock1",
+      "name": "Fox Float X2 Factory",
+      "image": "Images/Parts/RearShocks/fox_float_x2_factory.png",
+      "price": 1200,
+      "link": "https://www.example.com/fox-float-x2-factory"
+    }
+  ],
+  "drivetrains": [
+    {
+      "id": "drive1",
+      "name": "Shimano XTR M9100",
+      "image": "Images/Parts/Drivetrain/shimano_xtr_m9100.png",
+      "price": 1000,
+      "link": "https://www.example.com/shimano-xtr-m9100"
+    }
+  ],
+  "wheels": [
+    {
+      "id": "wheel1",
+      "name": "DT Swiss M1700",
+      "image": "Images/Parts/Wheels/dt_swiss_m1700.png",
+      "price": 700,
+      "link": "https://www.example.com/dt-swiss-m1700"
+    }
+  ],
+  "brakes": [
+    {
+      "id": "brake1",
+      "name": "Shimano XT M8120",
+      "image": "Images/Parts/Brakes/shimano_xt_m8120.png",
+      "price": 300,
+      "link": "https://www.example.com/shimano-xt-m8120"
+    }
+  ],
+  "handlebars": [
+    {
+      "id": "handlebar1",
+      "name": "Race Face Atlas",
+      "image": "Images/Parts/Handlebars/raceface_atlas.png",
+      "price": 150,
+      "link": "https://www.example.com/raceface-atlas"
+    }
+  ],
+  "seatposts": [
+    {
+      "id": "seatpost1",
+      "name": "Brand X Ascend II Dropper",
+      "image": "Images/Parts/Seatposts/brandx_ascend_ii.png",
+      "price": 200,
+      "link": "https://www.example.com/brandx-ascend-ii"
+    }
+  ],
+  "saddles": [
+    {
+      "id": "saddle1",
+      "name": "WTB Volt",
+      "image": "Images/Parts/Saddles/wtb_volt.png",
+      "price": 90,
+      "link": "https://www.example.com/wtb-volt"
     }
   ]
 }
-
