@@ -1,1 +1,24 @@
+{
+  "frames": [
+    {
+      "name": "Forbidden Supernought",
+      "file": "Forbidden-Supernought.png",
+      "price": 3500
+    },
+    {
+      "name": "Trek Remedy",
+      "file": "Trek-Remedy.png",
+      "price": 2800
+    }
+  ],
+  "forks": [
+    {
+      "name": "Fox 36 Factory",
+      "preview": "Fox-36-Preview.png",
+      "overlay": "Fox-36-Overlay.png",
+      "price": 899,
+      "link": "https://example.com/fox-36"
+    }
+  ]
+}
 
