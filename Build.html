@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Build Your Bike</title>
-  <link rel="stylesheet" href="styles/main.css" />
+  <meta charset="UTF-8">
+  <title>Bike Builder</title>
+  <link rel="stylesheet" href="Styles/main.css">
 </head>
 <body>
   <header>
-    <h1>Build Your Bike</h1>
-    <p id="frameName"></p>
-    <button onclick="window.location.href='index.html'">Change Frame</button>
+    <h1>Bike Builder</h1>
   </header>
 
-  <main class="builder-container">
-    <div class="bike-viewer">
-      <img id="frameImage" alt="Selected Frame" />
-      <div id="overlays"></div>
-    </div>
-    <div class="selector-panel">
-      <div class="category-buttons" id="categoryButtons"></div>
-      <div class="parts-slider" id="partSlider"></div>
-      <div class="price-estimate" id="priceEstimate">Estimated Price: £0</div>
-      <button id="finishBuild">Finish Build</button>
-    </div>
+  <main class="layout">
+    <aside class="part-menu" id="partMenu">
+      <!-- Buttons inserted by JS -->
+    </aside>
+
+    <section class="build-container">
+      <div class="frame-area">
+        <h2>Live Build Preview</h2>
+        <div class="frame-preview">
+          <img id="selectedFrame" src="" alt="">
+          <img id="forkImage" class="overlay-part">
+          <img id="rearShockImage" class="overlay-part">
+          <!-- Add more part overlays -->
+        </div>
+      </div>
+
+      <div class="parts-slider-area">
+        <h2 id="partsTitle">Choose Your Parts</h2>
+        <div class="part-slider" id="partSlider"></div>
+      </div>
+
+      <div class="price-column">
+        <h3 id="priceEstimate">Estimated Price: £0</h3>
+        <ul id="partList"></ul>
+        <button id="finishBuild">Finish Build</button>
+      </div>
+    </section>
   </main>
 
-  <script src="scripts/build.js"></script>
+  <script src="Scripts/Build.js"></script>
 </body>
 </html>
 
