@@ -1,71 +1,129 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const frame = JSON.parse(localStorage.getItem('selectedFrame'));
-  const frameImg = document.getElementById('selectedFrame');
-  frameImg.src = `Images/Frames/${frame.file}`;
-  frameImg.alt = frame.name;
+(async () => {
+  const data = await fetch('Data/parts.json').then(res => res.json());
 
-  const response = await fetch('Data/parts.json');
-  const partsData = await response.json();
+  const frameContainer = document.getElementById('frame-container');
+  const partsForm = document.getElementById('parts-form');
+  const totalPriceEl = document.getElementById('total-price');
+  const finishBuildBtn = document.getElementById('finish-build');
+  const backToFramesBtn = document.getElementById('back-to-frames');
 
-  const selectedParts = {
-    frame: frame,
-    forks: null,
-    rearShock: null
-  };
-
-  const priceEstimate = document.getElementById('priceEstimate');
-  const partList = document.getElementById('partList');
-
-  function updateEstimate() {
-    let total = 0;
-    partList.innerHTML = '';
-    for (const key in selectedParts) {
-      const part = selectedParts[key];
-      if (part && part.price) {
-        total += part.price;
-        const li = document.createElement('li');
-        li.textContent = `${key}: £${part.price}`;
-        partList.appendChild(li);
-      }
-    }
-    priceEstimate.textContent = `Estimated Price: £${total}`;
+  const selectedFrameId = localStorage.getItem('selectedFrameId');
+  if (!selectedFrameId) {
+    alert('No frame selected, redirecting to frames page.');
+    window.location.href = 'index.html';
+    return;
   }
 
-  const categories = Object.keys(partsData).filter(k => k !== 'frames');
-  const menu = document.getElementById('partMenu');
-  const slider = document.getElementById('partSlider');
-  const title = document.getElementById('partsTitle');
+  const frame = data.frames.find(f => f.id === selectedFrameId);
+  if (!frame) {
+    alert('Frame not found in data.');
+    window.location.href = 'index.html';
+    return;
+  }
 
-  categories.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.textContent = cat;
-    btn.addEventListener('click', () => loadParts(cat));
-    menu.appendChild(btn);
-  });
+  const frameImg = document.createElement('img');
+  frameImg.src = frame.image;
+  frameImg.alt = frame.name + ' frame';
+  frameContainer.appendChild(frameImg);
 
-  function loadParts(category) {
-    title.textContent = `Choose ${category}`;
-    slider.innerHTML = '';
-    partsData[category].forEach(part => {
-      const img = document.createElement('img');
-      img.src = `Images/Parts/${category}/${part.preview}`;
-      img.alt = part.name;
-      img.addEventListener('click', () => {
+  // All your categories exactly as you specified
+  const partCategories = [
+    'forks',
+    'rearShocks',
+    'drivetrains',
+    'wheels',
+    'brakes',
+    'handlebars',
+    'seatposts',
+    'saddles'
+  ];
+
+  const selectedParts = { frame: frame };
+  const overlays = {};
+
+  function createPartSelector(category) {
+    const parts = data[category];
+    if (!parts) return; // skip if category missing in data
+
+    const label = document.createElement('label');
+    label.htmlFor = category;
+    label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+
+    const select = document.createElement('select');
+    select.id = category;
+    select.name = category;
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'Select ' + category.slice(0, -1);
+    select.appendChild(defaultOption);
+
+    parts.forEach(part => {
+      const option = document.createElement('option');
+      option.value = part.id;
+      option.textContent = `${part.name} (£${part.price.toFixed(2)})`;
+      select.appendChild(option);
+    });
+
+    select.addEventListener('change', () => {
+      const part = parts.find(p => p.id === select.value);
+      if (part) {
         selectedParts[category] = part;
-        const overlay = document.getElementById(`${category}Image`);
-        if (overlay) overlay.src = `Images/Parts/${category}/${part.overlay}`;
-        updateEstimate();
-      });
-      slider.appendChild(img);
+      } else {
+        delete selectedParts[category];
+      }
+      updateBuildVisuals();
+      updatePrice();
+    });
+
+    partsForm.appendChild(label);
+    partsForm.appendChild(select);
+  }
+
+  partCategories.forEach(createPartSelector);
+
+  function updateBuildVisuals() {
+    Object.values(overlays).forEach(overlay => overlay.remove());
+
+    Object.entries(selectedParts).forEach(([key, part]) => {
+      if (key === 'frame') return;
+      if (!part.image) return;
+
+      const img = document.createElement('img');
+      img.src = part.image;
+      img.alt = part.name;
+      img.className = 'overlay-part';
+
+      // Positioning for overlays (you can customize this per part category)
+      img.style.position = 'absolute';
+      img.style.top = '0';
+      img.style.left = '0';
+      img.style.maxWidth = '100%';
+      img.style.pointerEvents = 'none';
+      img.style.userSelect = 'none';
+
+      frameContainer.appendChild(img);
+      overlays[key] = img;
     });
   }
 
-  document.getElementById('finishBuild').addEventListener('click', () => {
-    localStorage.setItem('finalBuild', JSON.stringify(selectedParts));
-    window.location.href = 'Summary.html';
+  function updatePrice() {
+    let total = frame.basePrice;
+    Object.entries(selectedParts).forEach(([key, part]) => {
+      if (key === 'frame') return;
+      if (part && part.price) total += part.price;
+    });
+    totalPriceEl.textContent = '£' + total.toFixed(2);
+  }
+
+  finishBuildBtn.addEventListener('click', () => {
+    localStorage.setItem('buildData', JSON.stringify(selectedParts));
+    window.location.href = 'summary.html';
   });
 
-  loadParts(categories[0]);
-  updateEstimate();
-});
+  backToFramesBtn.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
 
+  updatePrice();
+})();
